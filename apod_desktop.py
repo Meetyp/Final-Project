@@ -1,3 +1,6 @@
+import sys
+from datetime import date
+
 """ 
 COMP 593 - Final Project
 
@@ -53,7 +56,24 @@ def get_apod_date():
         date: APOD date
     """
     # TODO: Complete function body
-    apod_date = date.fromisoformat('2022-12-25')
+    num_params = len(sys.argv) - 1
+    if num_params >= 1:
+        try:
+            apod_date = date.fromisoformat(sys.argv[1])
+        except ValueError as err:
+            print(f"Error: Invalid date format; {err}")
+            sys.exit("Script execution aborted")
+
+        MIN_APOD_DATE = date.fromisoformat("1995-06-16")
+        if apod_date < MIN_APOD_DATE:
+            print(f"Error: Date too far in past; First APOD was on {MIN_APOD_DATE.isoformat()}")
+            sys.exit("Script execution aborted")
+        elif apod_date > date.today():
+            print("Error: APOD date cannot be in the future")
+            sys.exit("Script execution aborted")
+    else:
+        apod_date = date.today()
+
     return apod_date
 
 def get_script_dir():
