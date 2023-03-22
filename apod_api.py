@@ -10,7 +10,7 @@ API_KEY = '9hO2fAibprXw62bMNKtPxmi4pFG3iVqMbBlBuGWw'
 
 def main():
     # TODO: Add code to test the functions in this module
-    date_var = '2022-01-10' # get_apod_date
+    date_var = '2021-01-10' # get_apod_date
     information = get_apod_info(date_var)
     get_apod_image_url(information)
     
@@ -30,12 +30,15 @@ def get_apod_info(apod_date):
     'api_key': API_KEY,
     'date': apod_date
     }
-    resp_msg = requests.get(API_GET_URL, query_params)
+    header_params = {
+    'Accept': 'application/json'
+    }
+    resp_msg = requests.get(API_GET_URL, params=query_params, headers=header_params)
     print(resp_msg.text)
 
     if resp_msg.status_code == requests.codes.ok:
     # Extract text file content from response message body
-        apod_information = resp_msg.text
+        apod_information = resp_msg.json()
         # Split the text file content to get hashvalue
         return apod_information
 
@@ -51,8 +54,9 @@ def get_apod_image_url(apod_info_dict):
     Returns:
         str: APOD image URL
     """
-
-    return
+    image_url = apod_info_dict['hdurl']
+    print(image_url)
+    return image_url
 
 if __name__ == '__main__':
     main()
