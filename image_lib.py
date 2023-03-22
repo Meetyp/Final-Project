@@ -1,8 +1,12 @@
+from apod_api import get_apod_image_url
+import requests
 '''
 Library of useful functions for working with images.
 '''
 def main():
     # TODO: Add code to test the functions in this module
+    image_url = get_apod_image_url
+    download_image(image_url)
     return
 
 def download_image(image_url):
@@ -17,7 +21,11 @@ def download_image(image_url):
         bytes: Binary image data, if succcessful. None, if unsuccessful.
     """
     # TODO: Complete function body
-    return
+    file_url = image_url
+    resp_msg = requests.get(file_url)
+    if resp_msg.status_code == requests.codes.ok:
+        file_content = resp_msg.content
+        return file_content
 
 def save_image_file(image_data, image_path):
     """Saves image data as a file on disk.
