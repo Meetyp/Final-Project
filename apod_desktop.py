@@ -1,5 +1,6 @@
 import sys
 from datetime import date
+import sqlite3
 
 """ 
 COMP 593 - Final Project
@@ -98,12 +99,39 @@ def init_apod_cache(parent_dir):
     Args:
         parent_dir (str): Full path of parent directory    
     """
+    
     global image_cache_dir
     global image_cache_db
+
     # TODO: Determine the path of the image cache directory
+    image_cache_dir = os.path.join(parent_dir, 'APOD')
+
     # TODO: Create the image cache directory if it does not already exist
+    isExist = os.path.exists(image_cache_dir)
+    if not isExist:
+        os.mkdir(image_cache_dir)
+
     # TODO: Determine the path of image cache DB
+    image_cache_db = os.path.join(image_cache_dir, 'image_cache.db')
+
     # TODO: Create the DB if it does not already exist
+    isPresent = os.path.exists(image_cache_db)
+    if not isPresent:
+        con = sqlite3.connect(image_cache_db)
+        cur = con.cursor()
+        create_album_table_query = """
+            CREATE TABLE IF NOT EXISTS images_info
+            (
+                id INTEGER PRIMARY KEY,
+                title TEXT NOT NULL,
+                explanation TEXT NOT NULL,
+                path TEXT NOT NULL,
+                sha256 TEXT NOT NULL
+            );
+        """
+        cur.execute(create_album_table_query)
+        con.commit()
+        con.close()
 
 def add_apod_to_cache(apod_date):
     """Adds the APOD image from a specified date to the image cache.

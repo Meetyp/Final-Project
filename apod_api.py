@@ -10,7 +10,7 @@ API_KEY = '9hO2fAibprXw62bMNKtPxmi4pFG3iVqMbBlBuGWw'
 
 def main():
     # TODO: Add code to test the functions in this module
-    date_var = '2021-01-10' # get_apod_date
+    date_var = get_apod_date # '2021-01-10'
     information = get_apod_info(date_var)
     get_apod_image_url(information)
     
