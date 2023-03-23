@@ -9,7 +9,7 @@ API_KEY = '9hO2fAibprXw62bMNKtPxmi4pFG3iVqMbBlBuGWw'
 
 def main():
     # TODO: Add code to test the functions in this module
-    date_var = '2022-01-10'
+    date_var = '2022-05-08'
     information = get_apod_info(date_var)
     get_apod_image_url(information)
     
@@ -27,7 +27,8 @@ def get_apod_info(apod_date):
     """
     query_params = {
     'api_key': API_KEY,
-    'date': apod_date
+    'date': apod_date,
+    'thumbs': True
     }
     header_params = {
     'Accept': 'application/json'
@@ -57,9 +58,7 @@ def get_apod_image_url(apod_info_dict):
         image_url = apod_info_dict['hdurl']
         print("Image")
     elif apod_info_dict['media_type'] == 'video':
-        url = apod_info_dict['url']
-        url = url.split("/")[-1].split("?")[0]
-        image_url = f"https://img.youtube.com/vi/{url}/0.jpg"
+        image_url = apod_info_dict['thumbnail_url']
         print("Video")
     
     print(image_url)
