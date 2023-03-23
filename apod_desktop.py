@@ -19,12 +19,14 @@ import sys
 import sqlite3
 import apod_api
 import image_lib
+import re
 
 # Global variables
 image_cache_dir = None  # Full path of image cache directory
 image_cache_db = None   # Full path of image cache database
 
 def main():
+    determine_apod_file_path(" NGC #3521: Galaxy in a Bubble ", "https://img.youtube.com/vi/aKK7vS2CHC8/0.jpg")
     ## DO NOT CHANGE THIS FUNCTION ##
     # Get the APOD date from the command line
     apod_date = get_apod_date()    
@@ -154,8 +156,7 @@ def add_apod_to_cache(apod_date):
     # TODO: Download the APOD image
     image_file_url = apod_api.get_apod_image_url(apod_information)
     final_image = image_lib.download_image(image_file_url)
-    print(final_image)
-    
+
     # TODO: Check whether the APOD already exists in the image cache
     # TODO: Save the APOD file to the image cache directory
     # TODO: Add the APOD information to the DB
@@ -216,7 +217,12 @@ def determine_apod_file_path(image_title, image_url):
         str: Full path at which the APOD image file must be saved in the image cache directory
     """
     # TODO: Complete function body
-    return
+    file_extension = os.path.splitext(image_url)[1]
+    creating_file_name = image_title.strip().replace(" ", "_")
+    file_name = re.sub('[\W]+', '', creating_file_name) + file_extension
+    
+    file_path = os.path.join(get_script_dir(), 'APOD', file_name)
+    return file_path
 
 def get_apod_info(image_id):
     """Gets the title, explanation, and full path of the APOD having a specified
