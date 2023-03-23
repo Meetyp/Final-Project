@@ -5,7 +5,7 @@ Library of useful functions for working with images.
 '''
 def main():
     # TODO: Add code to test the functions in this module
-    image_url = get_apod_image_url
+    image_url = get_apod_image_url()
     download_image(image_url)
     return
 
