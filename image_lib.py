@@ -5,7 +5,6 @@ Library of useful functions for working with images.
 '''
 def main():
     # TODO: Add code to test the functions in this module
-    download_image("https://img.youtube.com/vi/RtDSxi-D4KA/0.jpg")
     return
 
 def download_image(image_url):
@@ -24,7 +23,6 @@ def download_image(image_url):
     resp_msg = requests.get(file_url)
     if resp_msg.status_code == requests.codes.ok:
         file_content = resp_msg.content
-        print(file_content)
         return file_content
 
 def save_image_file(image_data, image_path):
@@ -40,7 +38,12 @@ def save_image_file(image_data, image_path):
         bytes: True, if succcessful. False, if unsuccessful
     """
     # TODO: Complete function body
-    return
+    if image_data != '' & image_path != '':
+        with open(image_path, 'wb') as f:
+                f.write(image_data)
+        return True
+    else:
+        return False
 
 def set_desktop_background_image(image_path):
     """Sets the desktop background image to a specific image.
