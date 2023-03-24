@@ -27,7 +27,7 @@ image_cache_dir = None  # Full path of image cache directory
 image_cache_db = None   # Full path of image cache database
 
 def main():
-    determine_apod_file_path(" NGC #3521: Galaxy in a Bubble ", "https://img.youtube.com/vi/aKK7vS2CHC8/0.jpg")
+    # determine_apod_file_path(" NGC #3521: Galaxy in a Bubble ", "https://img.youtube.com/vi/aKK7vS2CHC8/0.jpg")
     ## DO NOT CHANGE THIS FUNCTION ##
     # Get the APOD date from the command line
     apod_date = get_apod_date()    
