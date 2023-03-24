@@ -282,11 +282,21 @@ def get_apod_info(image_id):
         dict: Dictionary of APOD information
     """
     # TODO: Query DB for image info
+    con = sqlite3.connect(image_cache_db)
+    cur = con.cursor()
+    query = """
+            SELECT title, explanation, path FROM images_info
+            WHERE id = ?;
+            """
+    cur.execute(query, image_id)
+    query_result = cur.fetchone()
+    con.close()
+
     # TODO: Put information into a dictionary
     apod_info = {
-        #'title': , 
-        #'explanation': ,
-        'file_path': 'TBD',
+        'title': query_result[0], 
+        'explanation': query_result[1],
+        'file_path': query_result[2],
     }
     return apod_info
 
@@ -297,8 +307,17 @@ def get_all_apod_titles():
         list: Titles of all images in the cache
     """
     # TODO: Complete function body
+    con = sqlite3.connect(image_cache_db)
+    cur = con.cursor()
+    query = """
+            SELECT title FROM images_info;
+            """
+    cur.execute(query)
+    query_result = cur.fetchall()
+    con.close()
     # NOTE: This function is only needed to support the APOD viewer GUI
-    return
+    title_list = [i for i in query_result]
+    return title_list
 
 if __name__ == '__main__':
     main()
