@@ -335,7 +335,7 @@ def get_all_apod_titles():
     query_result = cur.fetchall()
     con.close()
     # NOTE: This function is only needed to support the APOD viewer GUI
-    title_list = [i for i in query_result]
+    title_list = [i[0] for i in query_result]
     return title_list
 
 if __name__ == '__main__':
