@@ -165,23 +165,19 @@ def add_apod_to_cache(apod_date):
     apod_filepath = determine_apod_file_path(apod_title, image_file_url)
 
     # TODO: Check whether the APOD already exists in the image cache
-    con = sqlite3.connect(image_cache_db)
-    cur = con.cursor()
-    query = """
-            SELECT id FROM images_info
-            WHERE sha256 = ?;
-            """
-    cur.execute(query, image_sha256)
-    query_result = cur.fetchone()
-    con.close()
+    image_id = get_apod_id_from_db(image_sha256)
 
     # TODO: Save the APOD file to the image cache directory
-    if query_result is None:
-        image_lib.save_image_file(final_image, apod_filepath)
-        
-
-    # TODO: Add the APOD information to the DB
-        add_apod_to_db(apod_title, apod_explanation, apod_filepath, image_sha256)
+    try:
+        if image_id == 0:
+            image_save_status = image_lib.save_image_file(final_image, apod_filepath)
+            
+        # TODO: Add the APOD information to the DB
+            record_id = add_apod_to_db(apod_title, apod_explanation, apod_filepath, image_sha256)
+            return record_id
+        return image_id
+    except:
+        return 0
 
 def add_apod_to_db(title, explanation, file_path, sha256):
     """Adds specified APOD information to the image cache DB.
@@ -196,7 +192,26 @@ def add_apod_to_db(title, explanation, file_path, sha256):
         int: The ID of the newly inserted APOD record, if successful.  Zero, if unsuccessful       
     """
     # TODO: Complete function body
-    return 0
+    try:
+        con = sqlite3.connect(image_cache_db)
+        cur = con.cursor()
+        query = """
+                INSERT INTO images_info
+                (
+                    title,
+                    explanation,
+                    path,
+                    sha256
+                )
+                VALUES (?, ?, ?, ?);
+            """
+        query_data = (title, explanation, file_path, sha256)
+        cur.execute(query, query_data)
+        con.commit()
+        con.close()
+        return cur.lastrowid
+    except:
+        return 0
 
 def get_apod_id_from_db(image_sha256):
     """Gets the record ID of the APOD in the cache having a specified SHA-256 hash value
@@ -210,6 +225,17 @@ def get_apod_id_from_db(image_sha256):
         int: Record ID of the APOD in the image cache DB, if it exists. Zero, if it does not.
     """
     # TODO: Complete function body
+    con = sqlite3.connect(image_cache_db)
+    cur = con.cursor()
+    query = """
+            SELECT id FROM images_info
+            WHERE sha256 = ?;
+            """
+    cur.execute(query, image_sha256)
+    query_result = cur.fetchone()
+    con.close()
+    if query_result is not None:
+        return query_result[0]
     return 0
 
 def determine_apod_file_path(image_title, image_url):
