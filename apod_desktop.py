@@ -41,11 +41,11 @@ def main():
     apod_id = add_apod_to_cache(apod_date)
 
     # Get the information for the APOD from the DB
-    #apod_info = get_apod_info(apod_id)
+    apod_info = get_apod_info(apod_id)
 
     # Set the APOD as the desktop background image
-    # if apod_id != 0:
-    #     image_lib.set_desktop_background_image(apod_info['file_path'])
+    if apod_id != 0:
+        image_lib.set_desktop_background_image(apod_info['file_path'])
 
 def get_apod_date():
     """Gets the APOD date
@@ -310,7 +310,6 @@ def get_apod_info(image_id):
     cur.execute(query, str(image_id))
     query_result = cur.fetchone()
     con.close()
-    print(query_result)
 
     # TODO: Put information into a dictionary
     apod_info = {

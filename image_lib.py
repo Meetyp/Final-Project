@@ -1,5 +1,7 @@
 from apod_api import get_apod_image_url
 import requests
+import struct
+import ctypes
 '''
 Library of useful functions for working with images.
 '''
@@ -53,7 +55,15 @@ def set_desktop_background_image(image_path):
         bytes: True, if succcessful. False, if unsuccessful        
     """
     # TODO: Complete function body
-    return
+    try:
+        SPI_SETDESKWALLPAPER = 20
+        if struct.calcsize('P') * 8 == 64:
+            ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3)
+        else:
+            ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3)
+        return True
+    except:
+        return False
 
 def scale_image(image_size, max_size=(800, 600)):
     """Calculates the dimensions of an image scaled to a maximum width
