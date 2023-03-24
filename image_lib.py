@@ -61,6 +61,7 @@ def set_desktop_background_image(image_path):
             ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3)
         else:
             ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3)
+        print(f"Setting desktop to {image_path}...success")
         return True
     except:
         return False
