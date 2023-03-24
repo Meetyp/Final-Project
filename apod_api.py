@@ -6,15 +6,6 @@ Library for interacting with NASA's Astronomy Picture of the Day API.
 API_GET_URL = 'https://api.nasa.gov/planetary/apod'
 API_KEY = '9hO2fAibprXw62bMNKtPxmi4pFG3iVqMbBlBuGWw'
 
-
-def main():
-    # TODO: Add code to test the functions in this module
-    date_var = '2022-05-08'
-    information = get_apod_info(date_var)
-    get_apod_image_url(information)
-    
-    return
-
 def get_apod_info(apod_date):
     """Gets information from the NASA API for the Astronomy 
     Picture of the Day (APOD) from a specified date.
@@ -34,12 +25,11 @@ def get_apod_info(apod_date):
     'Accept': 'application/json'
     }
     resp_msg = requests.get(API_GET_URL, params=query_params, headers=header_params)
-    print(resp_msg.text)
 
     if resp_msg.status_code == requests.codes.ok:
     # Extract text file content from response message body
         apod_information = resp_msg.json()
-        # Split the text file content to get hashvalue
+        print(f"Getting {apod_date} APOD information from NASA...success")
         return apod_information
 
 def get_apod_image_url(apod_info_dict):
@@ -56,13 +46,8 @@ def get_apod_image_url(apod_info_dict):
     """
     if apod_info_dict['media_type'] == 'image':
         image_url = apod_info_dict['hdurl']
-        print("Image")
+
     elif apod_info_dict['media_type'] == 'video':
         image_url = apod_info_dict['thumbnail_url']
-        print("Video")
     
-    print(image_url)
     return image_url
-
-if __name__ == '__main__':
-    main()

@@ -3,9 +3,6 @@ import requests
 '''
 Library of useful functions for working with images.
 '''
-def main():
-    # TODO: Add code to test the functions in this module
-    return
 
 def download_image(image_url):
     """Downloads an image from a specified URL.
@@ -38,9 +35,10 @@ def save_image_file(image_data, image_path):
         bytes: True, if succcessful. False, if unsuccessful
     """
     # TODO: Complete function body
-    if image_data != '' & image_path != '':
+    if image_data != '' and image_path != '':
         with open(image_path, 'wb') as f:
                 f.write(image_data)
+        print(f"Saving image file as {image_path}...success")
         return True
     else:
         return False
@@ -73,6 +71,3 @@ def scale_image(image_size, max_size=(800, 600)):
     resize_ratio = min(max_size[0] / image_size[0], max_size[1] / image_size[1])
     new_size = (int(image_size[0] * resize_ratio), int(image_size[1] * resize_ratio))
     return new_size
-
-if __name__ == '__main__':
-    main()
