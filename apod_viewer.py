@@ -63,6 +63,7 @@ def get_data():
 
 def get_data_from_db():
     record_id = image_list_combobox.current() + 1
+    print(f"RECORD ID: {record_id}")
     apod_information = apod_desktop.get_apod_info(record_id)
     image_lib.set_desktop_background_image(apod_information['file_path'])
     setting_image(apod_information['file_path'])

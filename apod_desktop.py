@@ -307,7 +307,8 @@ def get_apod_info(image_id):
             SELECT title, explanation, path FROM images_info
             WHERE id = ?;
             """
-    cur.execute(query, str(image_id))
+    query_data = (str(image_id), )
+    cur.execute(query, query_data)
     query_result = cur.fetchone()
     con.close()
 
