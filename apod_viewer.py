@@ -55,24 +55,18 @@ def get_data():
     global date_var
     date_var = calender.get_date()
     record_id = apod_desktop.add_apod_to_cache(date_var)
-    print(f"RECORD ID: {record_id}")
     apod_information = apod_desktop.get_apod_info(record_id)
-    print(apod_information)
     image_lib.set_desktop_background_image(apod_information['file_path'])
     setting_image(apod_information['file_path'])
     image_explanation_label['text'] = apod_information['explanation']
-    print(f"Combobox Current ID: {image_list_combobox.current()}")
 
 
 def get_data_from_db():
     record_id = image_list_combobox.current() + 1
-    print(f"RECORD ID: {record_id}")
     apod_information = apod_desktop.get_apod_info(record_id)
-    print(apod_information)
     image_lib.set_desktop_background_image(apod_information['file_path'])
     setting_image(apod_information['file_path'])
     image_explanation_label['text'] = apod_information['explanation']
-    print(f"Combobox Current ID: {image_list_combobox.current()}")
 
 
 def download_image():
