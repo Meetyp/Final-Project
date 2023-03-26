@@ -6,6 +6,7 @@ import apod_desktop
 import image_lib
 from PIL import Image, ImageTk
 from tkcalendar import DateEntry
+from datetime import date
 
 
 # Determine the path and parent directory of this script
@@ -109,7 +110,9 @@ get_image_frame.pack(side=RIGHT, expand=True, fill=X, anchor=S, padx=5)
 get_image_label = Label(get_image_frame, text="Select Date: ")
 get_image_label.pack(side=LEFT, padx=5, pady=5)
 
-calender = DateEntry(get_image_frame, selectmode='day')
+min_date = date(1995, 6, 16)
+max_date = date.today()
+calender = DateEntry(get_image_frame, selectmode='day', mindate=min_date, maxdate=max_date)
 calender.pack(side=LEFT, padx=5, pady=5)
 
 download_image_btn = Button(get_image_frame, text="Download Image", command=lambda: get_data())
