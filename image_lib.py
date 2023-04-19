@@ -17,7 +17,6 @@ def download_image(image_url):
     Returns:
         bytes: Binary image data, if succcessful. None, if unsuccessful.
     """
-    # TODO: Complete function body
     file_url = image_url
     resp_msg = requests.get(file_url)
     if resp_msg.status_code == requests.codes.ok:
@@ -36,7 +35,6 @@ def save_image_file(image_data, image_path):
     Returns:
         bytes: True, if succcessful. False, if unsuccessful
     """
-    # TODO: Complete function body
     if image_data != '' and image_path != '':
         with open(image_path, 'wb') as f:
                 f.write(image_data)
@@ -54,7 +52,6 @@ def set_desktop_background_image(image_path):
     Returns:
         bytes: True, if succcessful. False, if unsuccessful        
     """
-    # TODO: Complete function body
     try:
         SPI_SETDESKWALLPAPER = 20
         if struct.calcsize('P') * 8 == 64:

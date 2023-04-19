@@ -18,7 +18,7 @@ database_file = 'APOD/image_cache.db'
 # Initialize the image cache
 apod_desktop.init_apod_cache(script_dir)
 
-# TODO: Create the GUI
+# Create the GUI
 root = Tk()
 root.title("Astronomy Picture of the Day Viewer")
 root.iconbitmap(icon_path)
@@ -30,7 +30,6 @@ title_var = StringVar()
 image_frame = Frame(root)
 image_frame.pack(fill=BOTH, expand=True)
 
-
 image = Image.open('Logo.png')
 image_size = image_lib.scale_image((1000, 500))
 resize_image = image.resize(image_size)
@@ -39,7 +38,6 @@ img = ImageTk.PhotoImage(resize_image)
 show_image_label = Label(image_frame, image=img)
 show_image_label.image = img
 show_image_label.pack()
-
 
 def setting_image(image_path):
     image1 = Image.open(image_path)
@@ -50,7 +48,6 @@ def setting_image(image_path):
     show_image_label.configure(image=new_img)
     show_image_label.image = new_img
 
-
 def get_data():
     global date_var
     date_var = calender.get_date()
@@ -60,7 +57,6 @@ def get_data():
     setting_image(apod_information['file_path'])
     image_explanation_label['text'] = apod_information['explanation']
 
-
 def get_data_from_db():
     record_id = image_list_combobox.current() + 1
     print(f"RECORD ID: {record_id}")
@@ -69,15 +65,12 @@ def get_data_from_db():
     setting_image(apod_information['file_path'])
     image_explanation_label['text'] = apod_information['explanation']
 
-
 def download_image():
     global date_var
     date_var = calender.get_date()
 
-
 def handle_combobox(e):
     set_as_desktop_btn['state'] = "active"
-
 
 image_explanation_label = Label(image_frame, text="", justify=LEFT)
 image_explanation_label.pack(fill=X, padx=5, pady=5)
