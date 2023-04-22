@@ -2,6 +2,7 @@ from apod_api import get_apod_image_url
 import requests
 import struct
 import ctypes
+import sys
 '''
 Library of useful functions for working with images.
 '''
@@ -22,6 +23,10 @@ def download_image(image_url):
     if resp_msg.status_code == requests.codes.ok:
         file_content = resp_msg.content
         return file_content
+    else:
+        sys.exit("No Proper Image Data Found")
+        return None
+        
 
 def save_image_file(image_data, image_path):
     """Saves image data as a file on disk.
